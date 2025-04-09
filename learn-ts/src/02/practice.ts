@@ -78,12 +78,23 @@
     ];
 
     // 5+
-    let nestedArray: [string[], number[], string[]] = [["apple", "banana"], [1, 2, 3], ["cherry"]];
+    let nestedArray: [string[], number[], string[]] = [
+        ["apple", "banana"],
+        [1, 2, 3],
+        ["cherry"]
+    ];
+
+    let nestedArray_union: (string | number)[][] = [
+        ["apple", "banana"],
+        [1, 2, 3],
+        ["cherry"]
+    ];
 
     // 6+
     let words: string[] = ["apple", "banana", "cherry", "kiwi"];
 
     // 7+ - ???
+    // 
     let items: [
         {id: number, name: string, price: number},
         {id: number, name: string, price: number},
@@ -93,6 +104,14 @@
         { id: 2, name: "Item2", price: 200 },
         ["discount", 10]
     ];
+
+    let items_union: (
+        { id: number; name: string; price: number} | (string | number)[])[]= [
+        { id: 1, name: "Item1", price: 100 },
+        { id: 2, name: "Item2", price: 200 },
+        ["discount", 10]
+    ];
+
 
     // 8+
     let profile: {
@@ -192,7 +211,14 @@
         [ "item1", 50 ],
         { name: "Item B", price: 200 },
         [ "item2", 75 ]
-      ];
+    ];
+
+    let dataSet_union: ({ name: string, price: number} | (string | number)[])[]= [
+        { name: "Item A", price: 100 },
+        [ "item1", 50 ],
+        { name: "Item B", price: 200 },
+        [ "item2", 75 ]
+    ];
 
     // 5++
     let complexStructure: {id: number, value: string, attributes: {weight: number, color: string}}[] = [
