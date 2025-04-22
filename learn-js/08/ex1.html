@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="load()">load</button>
+    <button onclick="load2()">load2</button>
+    <div style="display: grid; grid-template-columns: 1fr 1fr">
+      <div id="list"></div>
+      <div id="list2"></div>
+    </div>
+
+    <script>
+    // reflow와 repaint를 최적화한 코드인 load 함수!
+      function load() {
+        console.time("load");
+        const list = document.getElementById("list");
+        const fragment = document.createDocumentFragment();
+        const items = [];
+
+        // 9만개에 해당하는 li 태그를 fragment라는 가상 메모리에 item 저장
+        // fragment라는 객체는 가상 메모리이기 때문에 reflow와 repaint 실행되지 않음. 
+        // 왜? 객체를 fragment라는 가상 메모리에 넣어주고만 있기 때문.
+        // 실제로는 9만번이 아니라 한 번만 수행되고 있음.
+        // 왜? 객체를 list가 아니라 fragment라는 가상 메모리에 넣어주고만 있기 때문.
+        for (let i = 0; i < 90000; i++) {
+          const item = document.createElement("li");
+          item.textContent = `Item ${i}`;
+          fragment.append(item); // 메모리에 저장
+          // items.push(item);
+        }
+
+        // 생성된 요소들을 한 번에 DOM에 추가
+        // list.append(...items);
+        list.appendChild(fragment);
+
+        // DOM 추가 후 완료 시간을 측정
+        // setTimeout() 해주어야 시간이 바로 나오지 않고, 정확한 시간을 측정해준다.
+        setTimeout(() => {
+          console.timeEnd("load");
+        }, 0); // 렌더링이 완료된 후 시간을 측정하기 위해 0ms 지연
+      }
+
+
+
+
+    // reflow와 repaint를 최적화 하지 않은 코드인 load2 함수!
+      function load2() {
+        console.time("load2");
+        const list = document.getElementById("list2");
+        const items = [];
+
+        // 실제로 item을 가상 메모리가 아닌 list에 직접 넣어 주고 있음
+        //  그렇기 때문에 실제로 9만번이 reflow가 되고 repaint가 됨.
+        for (let i = 0; i < 90000; i++) {
+          const item = document.createElement("li");
+          item.textContent = `Item ${i}`;
+          list.appendChild(item);
+        }
+
+        // DOM 추가 후 완료 시간을 측정
+        // setTimeout() 해주어야 시간이 바로 나오지 않고, 정확한 시간을 측정해준다.
+        setTimeout(() => {
+          console.timeEnd("load2");
+        }, 0); // 렌더링이 완료된 후 시간을 측정하기 위해 0ms 지연
+      }
+    </script>
+  </body>
+</html>
