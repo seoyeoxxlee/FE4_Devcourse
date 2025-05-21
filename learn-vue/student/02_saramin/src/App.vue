@@ -6,9 +6,21 @@ export default {
       contents: ''
     };
   },
+  computed: {
+    trimmedLength() {
+      return this.contents.replace(/\s/g, '').length;
+    },
+    trimmedByte() {
+      return this.trimmedLength * 2;
+    }
+  },
   methods: {
     copyHandler() {
-
+      navigator.clipboard.writeText(this.contents).then(() => {
+        alert('복사되었습니다.');
+      }).catch(() => {
+        alert('복사 실패');
+      })
     },
     resetHandler() {
       this.contents = '';
@@ -29,7 +41,7 @@ export default {
       </div>
       <div class="str-info">
         <p>공백 포함 <span>{{ contents.length }}</span> 자 | <span>{{ contents.length * 2 }}</span> byte</p>
-        <p>공백 제외 <span>0</span> 자 | <span>0</span> byte</p>
+        <p>공백 제외 <span>{{ trimmedLength }}</span> 자 | <span>{{ trimmedByte }}</span> byte</p>
       </div>
       <div class="btn-area">
         <button @click="copyHandler">전체복사</button>
