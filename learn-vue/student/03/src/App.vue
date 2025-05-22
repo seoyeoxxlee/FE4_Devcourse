@@ -1,12 +1,14 @@
 <script>
-import CountButtons from './components/CountButtons.vue';
+// import CountButtons from './components/CountButtons.vue';
+import CountButtonsWithProp from './components/CountButtonsWithProp.vue';
 import CountDisplay from './components/CountDisplay.vue';
 
 export default {
   name: 'App',
   components: {
     CountDisplay,
-    CountButtons,
+    // CountButtons,
+    CountButtonsWithProp,
   },
   data() {
     return {
@@ -29,7 +31,8 @@ export default {
   
 <template>
   <CountDisplay :count="count"/>
-  <CountButtons @increment="increment" @reset="reset" @decrement="decrement"/>
+  <!-- <CountButtons @increment="increment" @reset="reset" @decrement="decrement"/> -->
+  <CountButtonsWithProp :increment="increment" :reset="reset" :decrement="decrement"/>
 </template>
   
 <style scoped>
