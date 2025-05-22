@@ -1,19 +1,13 @@
 <script>
 export default {
   name: 'CountButtons',
-  data() {
-    return {};
-  },
-  emits: ['decrement', 'reset', 'increment']
-  
-};
+  inject: ['decrement', 'increment', 'reset', 'incrementByAmount'],
+}
 </script>
-  
 <template>
-  <button @click="$emit('decrement')">-</button>
-  <button @click="$emit('reset')">0</button>
-  <button @click="$emit('increment')">+</button>
+  <button @click="decrement">-</button>
+  <button @click="reset">0</button>
+  <button @click="increment">+</button>
+  <button @click="incrementByAmount(10)">++</button>
 </template>
-  
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,6 +1,6 @@
 <script>
-import CountButtons from './CountButtons.vue';
-import CountDisplay from './CountDisplay.vue';
+import CountButtons from './CountButtons.vue'
+import CountDisplay from './CountDisplay.vue'
 
 export default {
   name: 'CountGroup',
@@ -8,23 +8,12 @@ export default {
     CountDisplay,
     CountButtons,
   },
-  props: {
-    count: {
-        type: Number,
-    },
-  },
-  emits: ['increment', 'reset', 'decrement'],
 }
 </script>
-  
+
 <template>
-    <CountDisplay :count="count"/>
-    <CountButtons 
-        @increment="$emit('increment')"
-        @reset="$emit('reset')"
-        @decrement="$emit('decrement')"
-    />
+  <CountDisplay />
+  <CountButtons />
 </template>
-  
-<style scoped>
-</style>
+
+<style scoped></style>
