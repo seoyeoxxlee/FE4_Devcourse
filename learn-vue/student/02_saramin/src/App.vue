@@ -1,55 +1,75 @@
-<script>
-export default {
-  name: 'App',
-  data() {
-    return {
-      contents: ''
-    };
-  },
-  computed: {
-    trimmedLength() {
-      return this.contents.replace(/\s/g, '').length;
-    },
-    trimmedByte() {
-      return this.trimmedLength * 2;
-    }
-  },
-  methods: {
-    copyHandler() {
-      navigator.clipboard.writeText(this.contents).then(() => {
-        alert('복사되었습니다.');
-      }).catch(() => {
-        alert('복사 실패');
-      })
-    },
-    resetHandler() {
-      this.contents = '';
-    },
-    changeHandler(e) {
-      this.contents = e.target.value;
-    },
-  }
-};
-</script>
-
 <template>
   <div class="saramin">
     <h1>글자수세기</h1>
     <div class="box">
       <div class="string-length">
-        <textarea type="text" v-model="contents" @input="changeHandler" placeholder="내용을 입력해주세요"></textarea>
+        <h1>{{ text }}</h1>
+        <textarea
+          placeholder="내용을 입력해주세요"
+          :value="text"
+          @input="updateCounts($event)"
+        ></textarea>
       </div>
       <div class="str-info">
-        <p>공백 포함 <span>{{ contents.length }}</span> 자 | <span>{{ contents.length * 2 }}</span> byte</p>
-        <p>공백 제외 <span>{{ trimmedLength }}</span> 자 | <span>{{ trimmedByte }}</span> byte</p>
+        <p>
+          공백 포함 <span>{{ withSpace.length }}</span> 자 |
+          <span>{{ getByteLength(withSpace) }}</span> byte
+        </p>
+        <p>
+          공백 제외 <span>{{ withoutSpace.length }}</span> 자 |
+          <span>{{ getByteLength(withoutSpace) }}</span> byte
+        </p>
       </div>
       <div class="btn-area">
-        <button @click="copyHandler">전체복사</button>
-        <button @click="resetHandler">초기화</button>
+        <button @click="copyText">전체복사</button>
+        <button @click="reset">초기화</button>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      text: '',
+    }
+  },
+  computed: {
+    withSpace() {
+      return this.text
+    },
+    withoutSpace() {
+      return this.text.replace(/\s/g, '')
+    },
+  },
+  methods: {
+    updateCounts(event) {
+      this.text = event.target.value
+    },
+    reset() {
+      this.text = ''
+    },
+    getByteLength(str) {
+      let bytes = 0
+      for (let i = 0; i < str.length; i++) {
+        const ch = str.charAt(i)
+        if (ch.match(/[ㄱ-ㅎㅏ-ㅣ가-힣]/)) {
+          bytes += 2
+        } else {
+          bytes += 1
+        }
+      }
+      return bytes
+    },
+    copyText() {
+      navigator.clipboard.writeText(this.text).then(() => {
+        alert('복사되었습니다.')
+      })
+    },
+  },
+}
+</script>
 
 <style scoped>
 .saramin {
