@@ -12,11 +12,11 @@ export default {
     // 화면에 표시할 현재 숫자 문자열
     currentOperandText() {
       if (this.currentOperand === "") return "0";
-      else return this.currentOperand;
+      else return this.formatNumber(this.currentOperand);
     },
     previousOperandText() {
       if (!this.previousOperand && !this.operation) return "";
-      return `${this.previousOperand} ${this.operation}`;
+      return `${this.formatNumber(this.previousOperand)} ${this.operation}`;
     },
   },
   methods: {
@@ -37,23 +37,23 @@ export default {
     },
     // 계산 결과를 수행할 함수
     calculator() {
-      const prev = parseFloat(this.previousOperand); //parseFloat은 실수형인 문자형도 숫자형으로 변경해준다.
-      const curr = parseFloat(this.currentOperand);
+      const prev = parseFloat(this.previousOperand) * 100000000; //parseFloat은 실수형인 문자형도 숫자형으로 변경해준다.
+      const curr = parseFloat(this.currentOperand) * 100000000;
       if(isNaN(prev) || isNaN(curr)) return;  // 숫자로 캐스팅한 prev와 curr이 NaN이 나오면 계산을 수행하지 않음
       
       let computation; // 계산 결과를 저장할 변수
       switch (this.operation) {
         case "+":
-          computation = prev + curr;
+          computation = (prev + curr) / 100000000;
           break;
         case "-":
-          computation = prev - curr;
+          computation = (prev - curr) / 100000000;
           break;
         case "×":
-          computation = prev * curr;
+          computation = (prev * curr) / 100000000;
           break;
         case "÷":
-          computation = prev / curr;
+          computation = (prev / curr) / 100000000;
           break;
         default:
           return;
@@ -73,6 +73,27 @@ export default {
       this.previousOperand = "";
       this.operation = null;    
     },
+    // 숫자 formating 1000 -> 1,000
+    formatNumber(number) {
+      const stringNumber = number.toString();
+      // 정수부
+      const integerDigits = parseFloat(stringNumber.split(".")[0]);
+      // 소수부
+      const decimalDigits = stringNumber.split(".")[1];
+
+      let integerDisplay;
+      if (isNaN(integerDigits)) {
+        integerDisplay = "";
+      } else {
+        integerDisplay = integerDigits.toLocaleString("en");
+      }
+
+      if (decimalDigits != null) {
+        return `${integerDisplay}.${decimalDigits}`;
+      } else {
+        return integerDisplay;
+      }
+    }
   },
 };
 </script>
