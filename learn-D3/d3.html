@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head>
+
+<body>
+  <div id="header">
+    <p>Circle</p>
+  </div>  
+
+  <svg width="200" height="200">
+    <circle cx="100" cy="100" r="50" fill="red"></circle>
+  </svg>
+
+  <div class="footer">
+    <p>Yes</p>
+  </div>
+
+  <script>
+    console.log(d3);
+    // 선택 - select() : 화면에 원하는 요소를 선택할 수 있음
+    // 텍스트 - text() : 텍스트를 가져올 때
+    // 스타일 - style()
+    // 속성 - attr()
+    // 삭제 - remove()
+
+    // d3 인스턴스 객체의 p태그를 선택.
+    console.log(d3.select("p").text());
+    // select는 연속적인 chaining도 가능하다.
+    console.log(d3.select(".footer").select("p").text());
+
+    d3.select("p").style("font-style", "italic");
+    // circle의 cx를 50으로, 반지름을 10으로 변경
+    d3.select("circle").attr("cx", 50).attr("r", 10);
+
+    d3.select("#header")
+      .append("p")
+      .text("new paragraph")
+      .style("font-style", "italic")
+      .style("color", "blue");
+
+    setTimeout(() => {
+      d3.selectAll("div").remove();
+    }, 2000);
+
+  </script>
+</body>
+</html>

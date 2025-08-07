@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .top-label {
+        float: left;
+        font-size: 14px;
+        font-style: italic;
+      }
+      .movie-label {
+        text-align: right;
+        font-weight: bold;
+        width: 115px;
+        padding-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>2025년 한국 개봉 영화 박스오피스 Top 10</h2>
+    <div class="top-label movie-label">
+      <p>영화</p>
+    </div>
+    <div class="top-label">
+      <p>관객수</p>
+    </div>
+    <svg id="chart" width="600px" height="500px"></svg>
+    <script>
+      (function () {
+        const movies = [
+          { name: "파묘", audience: 11914784 },
+          { name: "범죄도시4", audience: 11502779 },
+          { name: "인사인드 아웃2", audience: 8799013 },
+          { name: "베테랑", audience: 7525339 },
+          { name: "하얼빈", audience: 4905668 },
+          { name: "파일럿", audience: 4718036 },
+          { name: "소방관", audience: 3840559 },
+          { name: "모아나2", audience: 3550028 },
+          { name: "윙카", audience: 3531717 },
+          { name: "탈주", audience: 2561872 },
+        ];
+
+        // 고정값
+        const scaleX = 0.00003357;
+        const marginX = 120;
+        const marginY = 30;
+        const barHeight = 20;
+        const barGap = 5;
+        const tickXs = [0, 133.33, 266.66, 400];
+        const tickLables = ["0", "397만명", "794만명", "1191만명"];
+
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.getElementById("chart");
+
+        // 막대 전용 그룹
+        const gBars = document.createElementNS(svgNS, "g");
+        gBars.setAttribute(
+          "transform",
+          `translate(${marginX}, ${marginY}) scale(${scaleX}, 1)`
+        );
+        svg.append(gBars);
+
+        // 영화
+        movies.forEach((m, i) => {
+          const rect = document.createElementNS(svgNS, "rect");
+          rect.setAttribute("x", 0);
+          rect.setAttribute("y", i * (barHeight + barGap));
+          rect.setAttribute("width", m.audience);
+          rect.setAttribute("height", barHeight);
+          rect.setAttribute("fill", "red");
+          gBars.appendChild(rect);
+        });
+
+        // 영화 제목
+        const gMovieLable = document.createElementNS(svgNS, "g");
+        svg.appendChild(gMovieLable);
+
+        // 영화
+        movies.forEach((m, i) => {
+          const text = document.createElementNS(svgNS, "text");
+          text.setAttribute("x", 0);
+          text.setAttribute("y", 45 + i * (barHeight + barGap));
+          text.textContent = m.name;
+          gMovieLable.appendChild(text);
+        });
+
+        // 눈금선
+        //transform="translate(120, 30)" stroke="black" stroke-width="1"
+        const gTicks = document.createElementNS(svgNS, "g");
+        gTicks.setAttribute("transform", `translate(${marginX}, ${marginY})`);
+        gTicks.setAttribute("stroke", "black");
+        gTicks.setAttribute("stroke-width", "1");
+        svg.appendChild(gTicks);
+
+        tickXs.forEach((x) => {
+          const line = document.createElementNS(svgNS, "line");
+          line.setAttribute("x1", x);
+          line.setAttribute("y1", 0);
+          line.setAttribute("x2", x);
+          line.setAttribute("y2", -10);
+          gTicks.appendChild(line);
+        });
+
+        // 눈금 레이블
+        const gTickLabels = document.createElementNS(svgNS, "g");
+        gTickLabels.setAttribute(
+          "transform",
+          `translate(${marginX}, ${marginY})`
+        );
+        gTickLabels.setAttribute("text-anchor", "middle");
+        svg.appendChild(gTickLabels);
+
+        tickXs.forEach((x, i) => {
+          const text = document.createElementNS(svgNS, "text");
+          text.setAttribute("x", x);
+          text.setAttribute("y", -15);
+          text.textContent = tickLables[i];
+          gTickLabels.appendChild(text);
+        });
+      })();
+    </script>
+  </body>
+</html>

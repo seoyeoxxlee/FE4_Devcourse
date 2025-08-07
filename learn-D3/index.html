@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .top-label {
+        float: left;
+        font-size: 14px;
+        font-style: italic;
+      }
+      .movie-label {
+        text-align: right;
+        font-weight: bold;
+        width: 115px;
+        padding-right: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>2025년 한국 개봉 영화 박스오피스 Top 7</h2>
+    <div class="top-label movie-label">
+      <p>영화</p>
+    </div>
+    <div class="top-label">
+      <p>관객수</p>
+    </div>
+
+    <svg width="600px" height="500px">
+      <!-- 400px / 가장 큰 데이터 값 = 400 / 11914784 = 0.00003357 -->
+      <g transform="translate(120, 30) scale(0.00003357, 1)">
+        <rect x="0" y="0" width="11914784" height="20" fill="red"></rect>
+        <rect x="0" y="25" width="11502779" height="20" fill="red"></rect>
+        <rect x="0" y="50" width="8799013" height="20" fill="red"></rect>
+        <rect x="0" y="75" width="7525339" height="20" fill="red"></rect>
+        <rect x="0" y="100" width="4905668" height="20" fill="red"></rect>
+        <rect x="0" y="125" width="4718036" height="20" fill="red"></rect>
+        <rect x="0" y="150" width="3840559" height="20" fill="red"></rect>
+        <rect x="0" y="175" width="3550028" height="20" fill="red"></rect>
+        <rect x="0" y="200" width="3531717" height="20" fill="red"></rect>
+        <rect x="0" y="225" width="2561872" height="20" fill="red"></rect>
+      </g>
+
+      <g>
+        <text x="0" y="45">파묘</text>
+        <text x="0" y="70">범죄도시4</text>
+        <text x="0" y="95">인사이드 아웃2</text>
+        <text x="0" y="120">베테랑2</text>
+        <text x="0" y="145">하얼빈</text>
+        <text x="0" y="170">파일럿</text>
+        <text x="0" y="195">소방관</text>
+        <text x="0" y="220">모아나2</text>
+        <text x="0" y="245">웡카</text>
+        <text x="0" y="275">탈주</text>
+      </g>
+
+      <!-- 구간 나누기: 1191만명 / 3 = 397만명 -->
+      <!-- 공식: 위치값 = (데이터값(만단위) * 400) /1191 -->
+      <!-- 0 = (0 * 400) / 1191 = 0 -->
+      <!-- 397 = (397 * 400) / 1191 = 133.33 -->
+      <!--794 = (794 * 400) / 1191 = 266.66 -->
+      <!--1191 = (1191 * 400) / 1191 = 400 -->
+      <g transform="translate(120, 30)" stroke="black" stroke-width="1">
+        <line x1="0" y1="0" x2="0" y2="-10"></line>
+        <line x1="133.33" y1="0" x2="133.33" y2="-10"></line>
+        <line x1="266.66" y1="0" x2="266.66" y2="-10"></line>
+        <line x1="400" y1="0" x2="400" y2="-10"></line>
+      </g>
+
+      <g transform="translate(120, 30)" text-anchor="middle">
+        <text x="0" y="-15">0</text>
+        <text x="133.33" y="-15">397만명</text>
+        <text x="266.66" y="-15">794만명</text>
+        <text x="400" y="-15">1191만명</text>
+      </g>
+
+    </svg>
+  </body>
+
+</html>

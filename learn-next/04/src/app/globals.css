@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-nanum-pen: var(--font-nanum-pen-script);
+  --font-doldam: var(--font-doldam);
+}

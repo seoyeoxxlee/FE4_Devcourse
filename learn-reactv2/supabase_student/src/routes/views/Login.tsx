@@ -10,14 +10,20 @@ export default function Login() {
   }
 
   const handleGithubLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: 'github',
-      options: {
-        redirectTo: 'http://localhost:5175/', 
-      },
     })
-    if (error) console.error('로그인 에러:', error.message)
   }
+
+  // const handleGithubLogin = async () => {
+  //   const { error } = await supabase.auth.signInWithOAuth({
+  //     provider: 'github',
+  //     options: {
+  //       redirectTo: 'http://localhost:5175/', 
+  //     },
+  //   })
+  //   if (error) console.error('로그인 에러:', error.message)
+  // }
 
   return (
     <div className="min-h-screen bg-[#0D1117] flex items-center justify-center px-4">
@@ -58,7 +64,7 @@ export default function Login() {
               onClick={handleGithubLogin}
             >
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+                src="https://cdn.simpleicons.org/github?viewbox=auto"
                 alt="Google"
                 className="w-5 h-5 mr-2"
               />

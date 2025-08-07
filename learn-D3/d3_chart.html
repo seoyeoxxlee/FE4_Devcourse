@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .top-label {
+        float: left;
+        font-size: 14px;
+        font-style: italic;
+      }
+      .movie-label {
+        text-align: right;
+        font-weight: bold;
+        width: 115px;
+        padding-right: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>2025년 한국 개봉 영화 박스오피스 Top 10</h2>
+    <div class="top-label movie-label">
+      <p>영화</p>
+    </div>
+    <div class="top-label">
+      <p>관객수</p>
+    </div>
+    
+    <svg id="chart" width="600px" height="500px"></svg>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script>
+      (function () {
+        const movies = [
+          { name: "파묘", audience: 11914784 },
+          { name: "범죄도시4", audience: 11502779 },
+          { name: "인사인드 아웃2", audience: 8799013 },
+          { name: "베테랑", audience: 7525339 },
+          { name: "하얼빈", audience: 4905668 },
+          { name: "파일럿", audience: 4718036 },
+          { name: "소방관", audience: 3840559 },
+          { name: "모아나2", audience: 3550028 },
+          { name: "윙카", audience: 3531717 },
+          { name: "탈주", audience: 2561872 },
+        ];
+
+        // 고정값
+        const scaleX = 0.00003357;
+        const marginX = 120;
+        const marginY = 30;
+        const barHeight = 20;
+        const barGap = 5;
+        const tickXs = [0, 133.33, 266.66, 400];
+        const tickLables = ["0", "397만명", "794만명", "1191만명"];
+
+        const svg = d3.select("#chart");
+
+        // 막대 그룹
+        const gBars = svg
+          .append("g")
+          .attr(
+            "transform",
+            `translate(${marginX}, ${marginY}) scale(${scaleX}, 1)`
+          );
+
+        // 막대 그리기
+        gBars
+          .selectAll("rect")
+          .data(movies)
+          .enter()
+          .append("rect")
+          .attr("x", 0)
+          .attr("y", (_, i) => i * (barHeight + barGap))
+          .attr("width", (d) => d.audience)
+          .attr("height", barHeight)
+          .attr("fill", "red");
+
+        // 영화 제목
+        const gMovie = svg.append("g");
+        gMovie //
+          .selectAll("text")
+          .data(movies)
+          .enter()
+          .append("text")
+          .attr("x", 0)
+          .attr("y", (_, i) => 45 + i * (barHeight + barGap))
+          .text((d) => d.name);
+
+        // x축 줄눈
+        const gTicks = svg //
+          .append("g")
+          .attr("transform", `translate(${marginX}, ${marginY})`)
+          .attr("stroke", "black")
+          .attr("stroke-width", 1);
+
+        gTicks
+          .selectAll("line")
+          .data(tickXs)
+          .enter()
+          .append("line")
+          .attr("x1", (d) => d)
+          .attr("y1", 0)
+          .attr("x2", (d) => d)
+          .attr("y2", -10);
+
+        // 라벨 축
+        const gTickLabels = svg
+          .append("g")
+          .attr("transform", `translate(${marginX}, ${marginY})`)
+          .attr("text-anchor", "middle");
+
+        gTickLabels
+          .selectAll("text")
+          .data(tickLables)
+          .enter()
+          .append("text")
+          .attr("x", (_, i) => tickXs[i])
+          .attr("y", -15)
+          .text((d) => d);
+      })();
+    </script>
+  </body>
+</html>

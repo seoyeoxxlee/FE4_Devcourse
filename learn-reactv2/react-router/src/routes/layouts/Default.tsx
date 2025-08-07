@@ -8,7 +8,7 @@ export default function Default () {
             <Link to="/">Home</Link>
         </li>
         <li>
-            <Link to="/custom-about">About</Link>
+            <Link to="/custom-about/about">About</Link>
         </li>
     </nav>
 
