@@ -1,5 +1,6 @@
 .next/
 **/.next/
+echo "tanstack-student/04. simple-oauth(nextjs)/start"
 
 # Logs
 logs
